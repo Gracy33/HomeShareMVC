@@ -9,20 +9,33 @@ namespace HomeShareMVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-1.9.1.min.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/script.js",
+                        "~/Scripts/modernizr.custom.79639.js",
+                        "~/Scripts/jquery.ba-cond.min.js",
+                        "~/Scripts/jquery.slitslider.js"
+                        ));
 
-            // Utilisez la version de développement de Modernizr pour développer et apprendre. Puis, lorsque vous êtes
-            // prêt pour la production, utilisez l’outil de génération sur http://modernizr.com pour sélectionner uniquement les tests dont vous avez besoin.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            //// Utilisez la version de développement de Modernizr pour développer et apprendre. Puis, lorsque vous êtes
+            //// prêt pour la production, utilisez l’outil de génération sur http://modernizr.com pour sélectionner uniquement les tests dont vous avez besoin.
+            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            //            "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //          "~/Scripts/bootstrap.js",
+            //          "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css")
+               .Include("~/Content/css/bootstrap.min.css",
+               "~/Content/css/font-awesome.min.css",
+               "~/Content/css/bootstrap.css",
+               "~/Content/css/style.css",
+               "~/Content/css/Site.css",
+               "~/Content/css/slitslider/style.css",
+               "~/Content/css/slitslider/custom.css"
+               ));
         }
     }
 }

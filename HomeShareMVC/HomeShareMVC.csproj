@@ -109,7 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -125,19 +124,60 @@
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\slitslider\custom.css" />
+    <Content Include="Content\css\slitslider\style.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\about.jpg" />
+    <Content Include="Content\images\advertisements.jpg" />
+    <Content Include="Content\images\agents\1.jpg" />
+    <Content Include="Content\images\agents\2.jpg" />
+    <Content Include="Content\images\agents\3.jpg" />
+    <Content Include="Content\images\agents\4.jpg" />
+    <Content Include="Content\images\banner.jpg" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\bginside.jpg" />
+    <Content Include="Content\images\bgmain.png" />
+    <Content Include="Content\images\blog\1.jpg" />
+    <Content Include="Content\images\blog\2.jpg" />
+    <Content Include="Content\images\blog\3.jpg" />
+    <Content Include="Content\images\blog\4.jpg" />
+    <Content Include="Content\images\blog\5.jpg" />
+    <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\instagram.png" />
+    <Content Include="Content\images\linkedin.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\properties\1.jpg" />
+    <Content Include="Content\images\properties\2.jpg" />
+    <Content Include="Content\images\properties\3.jpg" />
+    <Content Include="Content\images\properties\4.jpg" />
+    <Content Include="Content\images\properties\5.jpg" />
+    <Content Include="Content\images\slider\1.jpg" />
+    <Content Include="Content\images\slider\2.jpg" />
+    <Content Include="Content\images\slider\3.jpg" />
+    <Content Include="Content\images\slider\4.jpg" />
+    <Content Include="Content\images\slider\5.jpg" />
+    <Content Include="Content\images\twitter.png" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\din.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\din.eot" />
+    <Content Include="fonts\din.ttf" />
+    <Content Include="fonts\din.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery.ba-cond.min.js" />
+    <Content Include="Scripts\jquery.slitslider.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr.custom.79639.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
