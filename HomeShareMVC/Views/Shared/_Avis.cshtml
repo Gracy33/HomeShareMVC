@@ -1,0 +1,33 @@
+﻿@model IEnumerable<HomeShare.DAL.Avis>
+
+<div class="container">
+    <div class="spacer">
+        <div class="col-lg-8 col-sm-8 ">
+            <h2>Avis sur le bien</h2>
+            @foreach (HomeShare.DAL.Avis item in Model)
+            {
+                <ul>
+                    <li>Par @item.LeMembre.Prenom @item.LeMembre.Nom Le @item.DateAvis.ToShortDateString() - @item.DateAvis.ToShortTimeString()</li>
+                    <li>@item.Note / 10</li>
+                    <li>@item.Message </li>
+                </ul>
+            }
+
+            <h3>Laissez votre avis</h3>
+            @if (Session["login"] != null)
+            {
+                <form method="post" action="/Bien/posterAvis">
+                <input type="text" class="form-control" placeholder="Name" name="txtName">
+                <textarea rows="6" class="form-control" placeholder="Message" name="txtMessage"></textarea><br />
+                <input type="hidden" name="id" value='@ViewContext.RouteData.Values["id"]' />
+                <button type="submit" class="btn btn-success" name="Submit">Enregistrer</button>
+            </form>
+            }
+            else
+            {
+                <p>Veuillez-vous <a href="~/User/Login/LoginForm">connecter</a> pour laisser votre avis.</p>
+            }
+
+        </div>
+    </div>
+</div>

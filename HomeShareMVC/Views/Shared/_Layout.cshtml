@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
@@ -10,18 +10,18 @@
 
 
     @*<!---->
-    <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/Content/css/style.css" />
-    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script src="~/Scripts/script.js"></script>
-    <!-- slitslider -->
-    <link rel="stylesheet" type="text/css" href="~/Content/css/slitslider/style.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/slitslider/custom.css" />
-    <script type="text/javascript" src="~/Scripts/modernizr.custom.79639.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.ba-cond.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.slitslider.js"></script>
-    <!-- slitslider -->*@
+        <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/Content/css/style.css" />
+        <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/script.js"></script>
+        <!-- slitslider -->
+        <link rel="stylesheet" type="text/css" href="~/Content/css/slitslider/style.css" />
+        <link rel="stylesheet" type="text/css" href="~/Content/css/slitslider/custom.css" />
+        <script type="text/javascript" src="~/Scripts/modernizr.custom.79639.js"></script>
+        <script type="text/javascript" src="~/Scripts/jquery.ba-cond.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/jquery.slitslider.js"></script>
+        <!-- slitslider -->*@
 </head>
 <body>
     <!-- Header Starts -->
@@ -47,9 +47,16 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="index.php">Home</a></li>
                         <li><a href="about.php">About</a></li>
-                        <li><a href="agents.php">Agents</a></li>
-                        <li><a href="blog.php">Blog</a></li>
-                        <li><a href="contact.php">Contact</a></li>
+                        @if (Session["login"] != null)
+                        {
+                            <li><a href="~/User/Login/LogOut">@HomeShareMVC.Helper.Utils.Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/User/Login/LoginForm">Login</a></li>
+                            <li><a href="~/User/Inscription/InscriptionForm">Inscription</a></li>
+                        }
+
                     </ul>
                 </div>
                 <!-- #Nav Ends -->
@@ -74,80 +81,40 @@
         </div>
         <!-- #Header Starts -->
     </div>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nom de l'application", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
-    @*<div class="container body-content">*@
-        @RenderBody()
-        <hr />
-        @*<footer>
+
+    @RenderBody()
+    <hr />
+    @*<footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>*@
-        <div class="footer">
+    <div class="footer">
 
-            <div class="container">
+        <div class="container">
 
-                <div class="row">
-                    <div class="col-lg-3 col-sm-3">
-                        <h4>Information</h4>
-                        <ul class="row">
-                            <li class="col-lg-12 col-sm-12 col-xs-3"><a href="about.php">About</a></li>
-                            <li class="col-lg-12 col-sm-12 col-xs-3"><a href="agents.php">Agents</a></li>
-                            <li class="col-lg-12 col-sm-12 col-xs-3"><a href="blog.php">Blog</a></li>
-                            <li class="col-lg-12 col-sm-12 col-xs-3"><a href="contact.php">Contact</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-3">
-                        <h4>Newsletter</h4>
-                        <p>Get notified about the latest properties in our marketplace.</p>
-                        <form class="form-inline" role="form">
-                            <input type="text" placeholder="Enter Your email address" class="form-control">
-                            <button class="btn btn-success" type="button">Notify Me!</button>
-                        </form>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-3">
-                        <h4>Follow us</h4>
-                        <a href="#"><img src="~/Content/images/facebook.png" alt="facebook"></a>
-                        <a href="#"><img src="~/Content/images/twitter.png" alt="twitter"></a>
-                        <a href="#"><img src="~/Content/images/linkedin.png" alt="linkedin"></a>
-                        <a href="#"><img src="~/Content/images/instagram.png" alt="instagram"></a>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-3">
-                        <h4>Contact us</h4>
-                        <p>
-                            <b>Bootstrap Realestate Inc.</b><br>
-                            <span class="glyphicon glyphicon-map-marker"></span> 8290 Walk Street, Australia <br>
-                            <span class="glyphicon glyphicon-envelope"></span> hello@bootstrapreal.com<br>
-                            <span class="glyphicon glyphicon-earphone"></span> (123) 456-7890
-                        </p>
-                    </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-3">
+                    <h4>Information</h4>
                 </div>
-                <p class="copyright">Copyright 2013. All rights reserved.	</p>
 
+                <div class="col-lg-3 col-sm-3">
+                    <h4>Newsletter</h4>
+                </div>
 
+                <div class="col-lg-3 col-sm-3">
+                    <h4>Suivez-nous</h4>
+                </div>
+
+                <div class="col-lg-3 col-sm-3">
+                    <h4>Contactez-nous</h4>
+                </div>
             </div>
-        </div>
+            <p class="copyright">Copyright 2015. All rights reserved.	</p>
 
-        <!-- Modal -->
+
+        </div>
+    </div>
+
+    @*<!-- Modal -->
         <div id="loginpop" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -181,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <!-- /.modal -->
+        <!-- /.modal -->*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

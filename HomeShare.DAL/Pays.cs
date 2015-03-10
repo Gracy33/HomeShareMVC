@@ -11,6 +11,7 @@ namespace HomeShare.DAL
         #region Fields
         private int _idPays;
         private string _libelle;
+        public List<Bien> _biensParPays;
         #endregion
 
         #region Getters/Setters;
@@ -25,9 +26,23 @@ namespace HomeShare.DAL
             get { return _libelle; }
             set { _libelle = value; }
         }
+
+        public List<Bien> BiensParPays
+        {
+            get
+            {
+                if (_biensParPays == null) _biensParPays = ChargerLesBiens();
+                return _biensParPays;
+            }
+        }
         #endregion
 
         public Pays() { }
+
+        private List<Bien> ChargerLesBiens()
+        {
+            return Bien.getBienParPays(this.IdPays);
+        }
 
         public static Pays getPays(int id)
         {

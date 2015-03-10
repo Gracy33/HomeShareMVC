@@ -16,6 +16,7 @@ namespace HomeShare.DAL
         private int _idBien;
         private DateTime _dateAvis;
         private bool _approuve = false;
+        private Membre _leMembre;
         #endregion
 
         #region Getters/Setters
@@ -59,15 +60,29 @@ namespace HomeShare.DAL
         {
             get { return _approuve; }
             set { _approuve = value; }
-        } 
+        }
+
+        public Membre LeMembre
+        {
+            get
+            {
+                if (_leMembre == null) _leMembre = chargerInfoMembre();
+                return _leMembre;
+            }
+        }
         #endregion
 
         public Avis() { }
 
+        private Membre chargerInfoMembre(){
+            
+            return Membre.getInfo(this.IdMembre);;
+        }
+
         public static List<Avis> getAvisBien(int idB)
         {
             List<Avis> retour = new List<Avis>();
-            List<Dictionary<string, object>> lesAvis = GestionConnexion.Instance.getData("select * from BienEchange where idBien =" + idB);
+            List<Dictionary<string, object>> lesAvis = GestionConnexion.Instance.getData("select * from AvisMembreBien where idBien =" + idB);
             foreach (Dictionary<string, object> unAvis in lesAvis)
             {
                 Avis avis = new Avis();
@@ -83,7 +98,7 @@ namespace HomeShare.DAL
             return retour;
         }
 
-        public static void AddAvis(int note, string txtMessage, int idM, int idB, bool approuve )
+        public static void AddAvis(int note, string txtMessage, int idM, int idB, bool approuve)
         {
             string query = @"INSERT INTO [dbo].[AvisMembreBien]
                                ([note]
@@ -97,7 +112,7 @@ namespace HomeShare.DAL
 
             DateTime date = DateTime.Now;
 
-            Dictionary<string, object> dicovalues = new Dictionary<string, object>();            
+            Dictionary<string, object> dicovalues = new Dictionary<string, object>();
             dicovalues.Add("note", note);
             dicovalues.Add("message", txtMessage);
             dicovalues.Add("idMembre", idM);

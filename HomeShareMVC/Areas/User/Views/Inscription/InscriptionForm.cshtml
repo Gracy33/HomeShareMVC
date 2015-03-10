@@ -1,0 +1,33 @@
+﻿@model HomeShareMVC.Models.Wrapper
+
+@{
+    ViewBag.Title = "Inscription";
+}
+
+<div class="container">
+    <div class="spacer">
+        <div class="row register">
+            <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+                <form action="~/User/Inscription/InscriptionForm" method="post">
+                    <input type="text" class="form-control" placeholder="Nom" name="txtNom">
+                    <input type="text" class="form-control" placeholder="Prénom" name="txtPrenom">
+                    <input type="text" class="form-control" placeholder="Email" name="txtEmail">
+                    <input type="text" class="form-control" placeholder="Telephone" name="txtPhone">
+                    <select class="form-control" name="pays">
+                        @foreach (var item in Model.LesPays)
+                        {
+                            <option value="@item.IdPays">@item.Libelle</option>
+                        }
+
+                    </select>
+                    <input type="text" class="form-control" placeholder="Login" name="txtLogin">
+                    <input type="password" class="form-control" placeholder="Password" name="txtPassword">
+
+                    <button type="submit" class="btn btn-success" name="Submit">Enregistrer</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+

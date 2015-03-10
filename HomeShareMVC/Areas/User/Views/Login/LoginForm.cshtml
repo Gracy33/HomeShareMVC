@@ -1,0 +1,28 @@
+﻿@model HomeShare.DAL.Membre
+
+@{
+    ViewBag.Title = "LoginForm";
+}
+
+<div class="container">
+    <div class="spacer">
+        <div class="row register">
+            <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+
+                <h2>Connectez-Vous</h2>                
+                <form method="post" action="~/User/Login/LoginForm">
+                    <span style="color:red">@ViewBag.Error</span><br />
+                    
+                    <input type="text" class="form-control" placeholder="Login" name="login" required><br>
+                    
+                    <input type="password" class="form-control" placeholder="Password" name="password" required><br>
+                    <button type="submit" class="btn btn-success" name="Submit">Connexion</button>
+                    
+                </form>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -109,16 +109,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Areas\User\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\User\Controllers\InscriptionController.cs" />
+    <Compile Include="Areas\User\Controllers\LoginController.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Controllers\BienController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\custom.cs" />
+    <Compile Include="Helper\Utils.cs" />
+    <Compile Include="Models\Wrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,11 +157,13 @@
     <Content Include="Content\images\instagram.png" />
     <Content Include="Content\images\linkedin.png" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\maisonSousMarine.jpg" />
     <Content Include="Content\images\properties\1.jpg" />
     <Content Include="Content\images\properties\2.jpg" />
     <Content Include="Content\images\properties\3.jpg" />
     <Content Include="Content\images\properties\4.jpg" />
     <Content Include="Content\images\properties\5.jpg" />
+    <Content Include="Content\images\rockHouse.jpg" />
     <Content Include="Content\images\slider\1.jpg" />
     <Content Include="Content\images\slider\2.jpg" />
     <Content Include="Content\images\slider\3.jpg" />
@@ -171,6 +180,11 @@
     <Content Include="fonts\din.eot" />
     <Content Include="fonts\din.ttf" />
     <Content Include="fonts\din.woff" />
+    <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\User\Views\Login\LoginForm.cshtml" />
+    <Content Include="Areas\User\Views\Inscription\InscriptionForm.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -195,10 +209,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Bien\Details.cshtml" />
+    <Content Include="Views\Home\_DerniersBiens.cshtml" />
+    <Content Include="Views\Shared\_Avis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HomeShare.DAL\HomeShare.DAL.csproj">

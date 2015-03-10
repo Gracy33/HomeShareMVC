@@ -16,7 +16,15 @@ namespace HomeShareMVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "HomeShareMVC.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "Details",
+                url: "{controller}/{action}/{id}/{idM}",
+                defaults: new { controller = "Bien", action = "Details", id = UrlParameter.Optional },
+                namespaces: new[] { "HomeShareMVC.Controllers" }
             );
         }
     }

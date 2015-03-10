@@ -72,21 +72,16 @@ namespace HomeShare.DAL
 
         //Constructeur vide
         public Membre()
-        {  }
+        { }
 
+
+
+        #region Method Static
         public static Membre getInfo(int id)
         {
             List<Dictionary<string, object>> membre = GestionConnexion.Instance.getData("select * from Membre where idMembre=" + id);
-            Membre m = new Membre();
-            m.IdMembre = int.Parse(membre[0]["idMembre"].ToString());
-            m.Nom = membre[0]["Nom"].ToString();
-            m.Prenom = membre[0]["Prenom"].ToString();
-            m.Email = membre[0]["Email"].ToString();
-            m.Pays = int.Parse(membre[0]["Pays"].ToString());
-            m.Telephone = membre[0]["Telephone"].ToString();
-            m.Login = membre[0]["Login"].ToString();
-            m.Password = membre[0]["Password"].ToString();
 
+            Membre m = Associe(membre[0]);
             return m;
         }
 
@@ -94,20 +89,26 @@ namespace HomeShare.DAL
         {
             List<Dictionary<string, object>> membres = GestionConnexion.Instance.getData("select * from Membre");
             List<Membre> lstMembre = new List<Membre>();
-            foreach (Dictionary<string, object> membre in membres)
+            foreach (Dictionary<string, object> item in membres)
             {
-                Membre m = new Membre();
-                m.IdMembre = int.Parse(membre["idMembre"].ToString());
-                m.Nom = membre["Nom"].ToString();
-                m.Prenom = membre["Prenom"].ToString();
-                m.Email = membre["Email"].ToString();
-                m.Pays = int.Parse(membre["Pays"].ToString());
-                m.Telephone = membre["Telephone"].ToString();
-                m.Login = membre["Login"].ToString();
-                m.Password = membre["Password"].ToString();
+                Membre m = Associe(item);
                 lstMembre.Add(m);
             }
             return lstMembre;
+        }
+
+        private static Membre Associe(Dictionary<string, object> item)
+        {
+            Membre m = new Membre();
+            m.IdMembre = int.Parse(item["idMembre"].ToString());
+            m.Nom = item["Nom"].ToString();
+            m.Prenom = item["Prenom"].ToString();
+            m.Email = item["Email"].ToString();
+            m.Pays = int.Parse(item["Pays"].ToString());
+            m.Telephone = item["Telephone"].ToString();
+            m.Login = item["Login"].ToString();
+            m.Password = item["Password"].ToString();
+            return m;
         }
 
         //public static List<Bien> getBiens(int idM)
@@ -143,34 +144,58 @@ namespace HomeShare.DAL
         //    return retour;
         //}
 
-        public virtual bool saveMembre()
+        public static Membre authentifier(string login, string password)
         {
-            Membre memb = Membre.getInfo(this.IdMembre);
-            string query = "";
-            if (memb == null)
+            List<Dictionary<string, object>> infoUser = GestionConnexion.Instance.getData("Select * from Membre where Login='" + login + "' and Password='" + password + "'");
+            Membre membre = null;
+            if (infoUser.Count > 0)
             {
-                query = @"INSERT INTO [dbo].[Membre]
-                                       ([Nom]
-                                       ,[Prenom]
-                                       ,[Email]
-                                       ,[Pays]
-                                       ,[Telephone]
-                                       ,[Login]
-                                       ,[Password])
-                                 VALUES(@nom,@prenom,@email,@pays,@telephone,@login,@password";
+                int id = (int)infoUser[0]["idMembre"];
+                membre = Membre.getInfo(id);
+            }
+            return membre;
+        }
+        #endregion
+
+
+        #region Insert/Update
+        /*INSERT & UPDATE*/
+        public virtual bool saveMembre(string txtNom, string txtPrenom, string txtEmail, int pays, string txtPhone, string txtLogin, string txtPassword)
+        {
+            string query = @"INSERT INTO Membre (Nom, Prenom , Email , Pays , Telephone , Login , Password)
+                                 VALUES(@nom,@prenom,@email,@pays,@telephone,@login,@password)";
+
+            Dictionary<string, object> valeurs = new Dictionary<string, object>();
+            valeurs.Add("nom", txtNom);
+            valeurs.Add("prenom", txtPrenom);
+            valeurs.Add("email", txtEmail);
+            valeurs.Add("pays", pays);
+            valeurs.Add("telephone", txtPhone);
+            valeurs.Add("login", txtLogin);
+            valeurs.Add("password", txtPassword);
+
+            if (GestionConnexion.Instance.saveData(query, GenerateKey.APP, valeurs))
+            {
+                return true;
             }
             else
             {
-                query = @"UPDATE [dbo].[Membre]
-                           SET  [Nom] = @nom
-                                ,[Prenom] = @prenom
-                                ,[Email] = @email
-                                ,[Pays] = @pays
-                                ,[Telephone] = @telephone
-                                ,[Login] = @login
-                                ,[Password] = @password
-                           Where [idMembre] = @idMembre";
+                return false;
             }
+        }
+
+        public virtual bool updateMembre()
+        {
+            string query = @"UPDATE [dbo].[Membre]
+                                       SET  [Nom] = @nom
+                                            ,[Prenom] = @prenom
+                                            ,[Email] = @email
+                                            ,[Pays] = @pays
+                                            ,[Telephone] = @telephone
+                                            ,[Login] = @login
+                                            ,[Password] = @password
+                                       Where [idMembre] = @idMembre";
+
 
             //les données a insérer
             Dictionary<string, object> valeurs = new Dictionary<string, object>();
@@ -192,5 +217,23 @@ namespace HomeShare.DAL
                 return false;
             }
         }
+
+        public virtual bool deleteMembre(int id)
+        {
+            string query = @"DELETE from Membre where idMembre= " + id;
+
+            Dictionary<string, object> valeurs = new Dictionary<string, object>();
+            valeurs.Add("idMembre", id);
+
+            if (GestionConnexion.Instance.saveData(query, GenerateKey.APP, valeurs))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

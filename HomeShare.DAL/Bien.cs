@@ -14,7 +14,7 @@ namespace HomeShare.DAL
         private string _descCourte;
         private string _descLongue;
         private int _nombrePersonne;
-        private int _pays = 1;
+        private int _idPays = 1;
         private string _ville;
         private string _rue;
         private string _numero;
@@ -27,6 +27,8 @@ namespace HomeShare.DAL
         private string _longitude;
         private int _idMembre;
         private DateTime _dateCreation;
+        private Pays _paysDuBien;
+        public List<Avis> _lesAvis;
         #endregion
 
 
@@ -61,10 +63,10 @@ namespace HomeShare.DAL
             set { _nombrePersonne = value; }
         }
 
-        public int Pays
+        public int IdPays
         {
-            get { return _pays; }
-            set { _pays = value; }
+            get { return _idPays; }
+            set { _idPays = value; }
         }
         public string Ville
         {
@@ -137,38 +139,45 @@ namespace HomeShare.DAL
             get { return _dateCreation; }
             set { _dateCreation = value; }
         }
+
+        public List<Avis> LesAvis
+        {
+            get
+            {
+                if (_lesAvis == null) _lesAvis = ChargerLesAvis();
+                return _lesAvis;
+            }
+        }
+
+        public Pays PaysDuBien
+        {
+            get
+            {
+                if (_paysDuBien == null) _paysDuBien = chargerInfoPays();
+                return _paysDuBien;
+            }
+        }
+
         #endregion
 
         public Bien()
         { }
 
+        private Pays chargerInfoPays()
+        {
+            return Pays.getPays(this.IdPays);
+        }
+
+        private List<Avis> ChargerLesAvis()
+        {
+            return Avis.getAvisBien(this.IdBien);
+        }
+
+        #region Method Static
         public static Bien getBien(int id)
         {
             List<Dictionary<string, object>> unBien = GestionConnexion.Instance.getData("select * from BienEchange where idBien=" + id);
-            Bien b = new Bien();
-
-            b.IdBien = int.Parse(unBien[0]["idBien"].ToString());
-            b.Titre = unBien[0]["titre"].ToString();
-            b.DescCourte = unBien[0]["DescCourte"].ToString();
-            b.DescLongue = unBien[0]["DescLong"].ToString();
-            b.NombrePersonne = int.Parse(unBien[0]["NombrePerson"].ToString());
-            b.Pays = int.Parse(unBien[0]["Pays"].ToString());
-            b.Ville = unBien[0]["Ville"].ToString();
-            b.Rue = unBien[0]["Rue"].ToString();
-            b.Numero = unBien[0]["Numero"].ToString();
-            b.CodePostal = unBien[0]["CodePostal"].ToString();
-            b.Photo = unBien[0]["Photo"].ToString();
-            b.AssuranceOblig = bool.Parse(unBien[0]["AssuranceObligatoire"].ToString());
-            b.IsEnabled = bool.Parse(unBien[0]["isEnabled"].ToString());
-            if (unBien[0]["DisabledDate"].ToString() != "")
-            {
-                b.DisabledDate = DateTime.Parse(unBien[0]["DisabledDate"].ToString());
-            }
-            b.Latitude = unBien[0]["Latitude"].ToString();
-            b.Longitude = unBien[0]["Longitude"].ToString();
-            b.IdMembre = int.Parse(unBien[0]["idMembre"].ToString());
-            b.DateCreation = DateTime.Parse(unBien[0]["DateCreation"].ToString());
-
+            Bien b = Associe(unBien[0]);
             return b;
         }
 
@@ -178,28 +187,7 @@ namespace HomeShare.DAL
             List<Bien> lstBien = new List<Bien>();
             foreach (Dictionary<string, object> unBien in biens)
             {
-                Bien b = new Bien();
-                b.IdBien = int.Parse(unBien["idBien"].ToString());
-                b.Titre = unBien["titre"].ToString();
-                b.DescCourte = unBien["DescCourte"].ToString();
-                b.DescLongue = unBien["DescLong"].ToString();
-                b.NombrePersonne = int.Parse(unBien["NombrePerson"].ToString());
-                b.Pays = int.Parse(unBien["Pays"].ToString());
-                b.Ville = unBien["Ville"].ToString();
-                b.Rue = unBien["Rue"].ToString();
-                b.Numero = unBien["Numero"].ToString();
-                b.CodePostal = unBien["CodePostal"].ToString();
-                b.Photo = unBien["Photo"].ToString();
-                b.AssuranceOblig = bool.Parse(unBien["AssuranceObligatoire"].ToString());
-                b.IsEnabled = bool.Parse(unBien["isEnabled"].ToString());
-                if (unBien["DisabledDate"].ToString() != "")
-                {
-                    b.DisabledDate = DateTime.Parse(unBien["DisabledDate"].ToString());
-                }
-                b.Latitude = unBien["Latitude"].ToString();
-                b.Longitude = unBien["Longitude"].ToString();
-                b.IdMembre = int.Parse(unBien["idMembre"].ToString());
-                b.DateCreation = DateTime.Parse(unBien["DateCreation"].ToString());
+                Bien b = Associe(unBien);
                 lstBien.Add(b);
             }
             return lstBien;
@@ -208,33 +196,11 @@ namespace HomeShare.DAL
         public static List<Bien> getMeilleurEchange()
         {
             List<Dictionary<string, object>> biens = GestionConnexion.Instance.getData("SELECT TOP 5 * FROM [HomeShareDB].[dbo].[Vue_MeilleursAvis]");
-            
-            List<Bien> lstBien = new List<Bien>();
-            foreach (Dictionary<string, object> unBien in biens)
-            {
-                Bien b = new Bien();
-                b.IdBien = int.Parse(unBien["idBien"].ToString());
-                b.Titre = unBien["titre"].ToString();
-                b.DescCourte = unBien["DescCourte"].ToString();
-                b.DescLongue = unBien["DescLong"].ToString();
-                b.NombrePersonne = int.Parse(unBien["NombrePerson"].ToString());
-                b.Pays = int.Parse(unBien["Pays"].ToString());
-                b.Ville = unBien["Ville"].ToString();
-                b.Rue = unBien["Rue"].ToString();
-                b.Numero = unBien["Numero"].ToString();
-                b.CodePostal = unBien["CodePostal"].ToString();
-                b.Photo = unBien["Photo"].ToString();
-                b.AssuranceOblig = bool.Parse(unBien["AssuranceObligatoire"].ToString());
-                b.IsEnabled = bool.Parse(unBien["isEnabled"].ToString());
-                if (unBien["DisabledDate"].ToString() != "")
-                {
-                    b.DisabledDate = DateTime.Parse(unBien["DisabledDate"].ToString());
-                }
-                b.Latitude = unBien["Latitude"].ToString();
-                b.Longitude = unBien["Longitude"].ToString();
-                b.IdMembre = int.Parse(unBien["idMembre"].ToString());
-                b.DateCreation = DateTime.Parse(unBien["DateCreation"].ToString());
 
+            List<Bien> lstBien = new List<Bien>();
+            foreach (Dictionary<string, object> item in biens)
+            {
+                Bien b = Associe(item);
                 lstBien.Add(b);
             }
             return lstBien;
@@ -247,34 +213,54 @@ namespace HomeShare.DAL
             List<Bien> lstBien = new List<Bien>();
             foreach (Dictionary<string, object> unBien in biens)
             {
-                Bien b = new Bien();
-                b.IdBien = int.Parse(unBien["idBien"].ToString());
-                b.Titre = unBien["titre"].ToString();
-                b.DescCourte = unBien["DescCourte"].ToString();
-                b.DescLongue = unBien["DescLong"].ToString();
-                b.NombrePersonne = int.Parse(unBien["NombrePerson"].ToString());
-                b.Pays = int.Parse(unBien["Pays"].ToString());
-                b.Ville = unBien["Ville"].ToString();
-                b.Rue = unBien["Rue"].ToString();
-                b.Numero = unBien["Numero"].ToString();
-                b.CodePostal = unBien["CodePostal"].ToString();
-                b.Photo = unBien["Photo"].ToString();
-                b.AssuranceOblig = bool.Parse(unBien["AssuranceObligatoire"].ToString());
-                b.IsEnabled = bool.Parse(unBien["isEnabled"].ToString());
-                if (unBien["DisabledDate"].ToString() != "")
-                {
-                    b.DisabledDate = DateTime.Parse(unBien["DisabledDate"].ToString());
-                }
-                b.Latitude = unBien["Latitude"].ToString();
-                b.Longitude = unBien["Longitude"].ToString();
-                b.IdMembre = int.Parse(unBien["idMembre"].ToString());
-                b.DateCreation = DateTime.Parse(unBien["DateCreation"].ToString());
-
+                Bien b = Associe(unBien);
                 lstBien.Add(b);
             }
             return lstBien;
         }
 
+        public static List<Bien> getBienParPays(int idPays)
+        {
+            List<Dictionary<string, object>> lstBiens = GestionConnexion.Instance.getData("SELECT * FROM [HomeShareDB].[dbo].[Vue_BiensParPays] where Pays = "+ idPays );
+
+            List<Bien> biensPays = new List<Bien>();
+            foreach (Dictionary<string, object> unBien in lstBiens)
+            {
+                Bien b = Associe(unBien);
+                biensPays.Add(b);
+            }
+            return biensPays;
+        }
+
+        private static Bien Associe(Dictionary<string, object> item)
+        {
+            Bien b = new Bien();
+            b.IdBien = int.Parse(item["idBien"].ToString());
+            b.Titre = item["titre"].ToString();
+            b.DescCourte = item["DescCourte"].ToString();
+            b.DescLongue = item["DescLong"].ToString();
+            b.NombrePersonne = int.Parse(item["NombrePerson"].ToString());
+            b.IdPays = int.Parse(item["Pays"].ToString());
+            b.Ville = item["Ville"].ToString();
+            b.Rue = item["Rue"].ToString();
+            b.Numero = item["Numero"].ToString();
+            b.CodePostal = item["CodePostal"].ToString();
+            b.Photo = item["Photo"].ToString();
+            b.AssuranceOblig = bool.Parse(item["AssuranceObligatoire"].ToString());
+            b.IsEnabled = bool.Parse(item["isEnabled"].ToString());
+            if (item["DisabledDate"].ToString() != "")
+            {
+                b.DisabledDate = DateTime.Parse(item["DisabledDate"].ToString());
+            }
+            b.Latitude = item["Latitude"].ToString();
+            b.Longitude = item["Longitude"].ToString();
+            b.IdMembre = int.Parse(item["idMembre"].ToString());
+            b.DateCreation = DateTime.Parse(item["DateCreation"].ToString());
+            return b;
+        }
+        #endregion
+
+        #region Insert/Update/Delete
         public virtual bool updateBien()
         {
             Bien info = Bien.getBien(this.IdBien);
@@ -306,7 +292,7 @@ namespace HomeShare.DAL
             valeurs.Add("descCourte", this.DescCourte);
             valeurs.Add("descLong", this.DescLongue);
             valeurs.Add("nombrePerson", this.NombrePersonne);
-            valeurs.Add("pays", this.Pays);
+            valeurs.Add("pays", this.IdPays);
             valeurs.Add("ville", this.Ville);
             valeurs.Add("rue", this.Rue);
             valeurs.Add("numero", this.Numero);
@@ -331,8 +317,8 @@ namespace HomeShare.DAL
         }
 
         public virtual bool deleteBien(int id)
-        {            
-            string query = @"DELETE from BienEchange where idBien= "+ id;
+        {
+            string query = @"DELETE from BienEchange where idBien= " + id;
 
             Dictionary<string, object> valeurs = new Dictionary<string, object>();
             valeurs.Add("idBien", id);
@@ -345,7 +331,8 @@ namespace HomeShare.DAL
             {
                 return false;
             }
-        }      
+        }
+        #endregion
 
     }
 }

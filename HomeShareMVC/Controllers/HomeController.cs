@@ -1,4 +1,5 @@
 ﻿using HomeShare.DAL;
+using HomeShareMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,11 @@ namespace HomeShareMVC.Controllers
     {
         public ActionResult Index()
         {
-            List<Bien> b = Bien.getAllBiens();
-
-            return View(b);
+            Wrapper lstBien = new Wrapper();
+            lstBien.DernierBien = Bien.getDerniersBiens();
+            lstBien.MeilleursBiens = Bien.getMeilleurEchange();
+            return View(lstBien);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
